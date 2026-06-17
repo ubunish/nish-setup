@@ -62,7 +62,7 @@ MACOS_CASKS=(
 # Cloned at default-branch HEAD (tracks main) — no upstream tags to pin yet.
 MACOS_FOXGLOVE_EXTENSIONS=(
   "joint-state-publisher|https://github.com/rogy-ken/foxglove-joint-state-publisher|rogyken.joint-state-publisher-*"
-  "fm-teleop|https://github.com/Ubundi/fm-ros2|firstmotive.fm-teleop-*|src/fm_teleop/fm_teleop_panel"
+  "fm-teleop|https://github.com/first-motive/fm-ros2|firstmotive.fm-teleop-*|fm_teleop/fm_teleop_panel"
 )
 
 # Base apt deps installed early on Ubuntu. jq mirrors the macOS formula.
