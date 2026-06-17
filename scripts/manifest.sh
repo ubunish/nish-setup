@@ -16,6 +16,7 @@ MACOS_STEPS=(
   "homebrew|00-homebrew.sh|on"
   "cli-tools|10-cli-tools.sh|on"
   "claude-code|20-claude-code.sh|on"
+  "codebase-memory-mcp|25-codebase-memory-mcp.sh|on"
   "apps|30-apps.sh|on"
   "foxglove-extensions|35-foxglove-extensions.sh|on"
   "accounts|40-accounts.sh|on"
