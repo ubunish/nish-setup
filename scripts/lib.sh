@@ -60,9 +60,12 @@ require_linux() { [[ "$(uname -s)" == "Linux"  ]] || { err "Linux only";  exit 1
 
 # --- Step gating -----------------------------------------------------------
 # setup.sh fills DISABLED (from --skip) and ONLY (from --only) before iterating
-# the manifest. These default empty so a step sourced standalone always runs.
-DISABLED=("${DISABLED[@]:-}")
-ONLY=("${ONLY[@]:-}")
+# the manifest. Default to a genuine empty array when unset so a step sourced
+# standalone always runs. The old "${arr[@]:-}" form seeded a single empty-string
+# element, which made the `-n "${ONLY[0]}"` guard in is_enabled always fail and
+# silently ignored --only / --skip. (`${arr+x}` is bash 3.2 safe.)
+[[ ${DISABLED+x} ]] || DISABLED=()
+[[ ${ONLY+x} ]] || ONLY=()
 
 # _in_list NEEDLE ITEM... — 0 if NEEDLE equals one of the ITEMs.
 _in_list() {
