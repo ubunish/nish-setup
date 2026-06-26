@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Claude Code, gh CLI, uv.
+# Claude Code, gh CLI, uv, starship.
 set -euo pipefail
 source "$(dirname "$0")/../lib.sh"
 require_linux
@@ -13,6 +13,7 @@ do_check() {
   fi
   has_cmd gh && ok "gh installed" || warn "gh missing"
   has_cmd uv && ok "uv installed" || warn "uv missing"
+  has_cmd starship && ok "starship installed" || warn "starship missing"
   return 0
 }
 
@@ -62,6 +63,17 @@ do_install() {
     ok "uv installed"
     info "Open a new shell or 'source ~/.bashrc' to pick up the uv PATH change."
   fi
+
+  # starship — official installer to ~/.local/bin (no sudo), init line in ~/.bashrc
+  if has_cmd starship; then
+    ok "starship already installed"
+  else
+    log "Installing starship"
+    curl -sS https://starship.rs/install.sh | sh -s -- -y -b "$HOME/.local/bin"
+    ok "starship installed"
+  fi
+  ensure_line "$HOME/.bashrc" 'eval "$(starship init bash)"'
+  ok "starship init line in ~/.bashrc"
 }
 
 do_uninstall() {
@@ -76,6 +88,12 @@ do_uninstall() {
     log "Removing uv"
     rm -rf "$HOME/.local/bin/uv" "$HOME/.local/bin/uvx" "$HOME/.cargo/bin/uv" "$HOME/.cargo/bin/uvx" 2>/dev/null || true
     ok "uv removed"
+  fi
+  if has_cmd starship; then
+    log "Removing starship"
+    rm -f "$HOME/.local/bin/starship" 2>/dev/null || true
+    strip_line "$HOME/.bashrc" 'eval "$(starship init bash)"'
+    ok "starship removed"
   fi
   warn "gh and its GitHub apt repo are left in place — remove manually if unwanted."
   return 0

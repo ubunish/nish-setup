@@ -19,6 +19,21 @@ err()    { printf '%s\n' "${RED}    ✗${RESET} $*" >&2; }
 
 has_cmd() { command -v "$1" >/dev/null 2>&1; }
 
+# ensure_line FILE LINE — append LINE to FILE once. Creates FILE if absent.
+# Idempotent: a re-run finds the exact line already present and skips.
+ensure_line() {
+  local file="$1" line="$2"
+  [[ -f "$file" ]] || touch "$file"
+  grep -qF "$line" "$file" 2>/dev/null || printf '\n%s\n' "$line" >>"$file"
+}
+
+# strip_line FILE LINE — remove every exact-match LINE from FILE (uninstall side).
+strip_line() {
+  local file="$1" line="$2"
+  [[ -f "$file" ]] || return 0
+  grep -vxF "$line" "$file" >"$file.tmp" && mv "$file.tmp" "$file"
+}
+
 # pause "message" — print and wait for Enter (skipped under NONINTERACTIVE=1)
 pause() {
   if [[ "${NONINTERACTIVE:-0}" == "1" ]]; then

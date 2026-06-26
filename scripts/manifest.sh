@@ -43,7 +43,7 @@ UBUNTU_STEPS=(
 
 # --- Package arrays --------------------------------------------------------
 
-MACOS_FORMULAE=(gh uv python node cloudflare-wrangler jq mermaid-cli)
+MACOS_FORMULAE=(gh uv python node cloudflare-wrangler jq mermaid-cli starship)
 
 MACOS_CASKS=(
   slack

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# CLI tools via Homebrew: gh, uv, python, node.
+# CLI tools via Homebrew: gh, uv, python, node, starship.
+# starship also needs an init line in ~/.zshrc; the brew loop only drops the binary.
 set -euo pipefail
 source "$(dirname "$0")/../lib.sh"
 require_macos
@@ -14,6 +15,11 @@ do_check() {
       warn "$f not installed"
     fi
   done
+  if grep -qF 'starship init zsh' "$HOME/.zshrc" 2>/dev/null; then
+    ok "starship init line in ~/.zshrc"
+  else
+    warn "starship init line missing from ~/.zshrc"
+  fi
   return 0
 }
 
@@ -28,6 +34,8 @@ do_install() {
       ok "$f"
     fi
   done
+  ensure_line "$HOME/.zshrc" 'eval "$(starship init zsh)"'
+  ok "starship init line in ~/.zshrc"
 }
 
 do_uninstall() {
@@ -41,6 +49,8 @@ do_uninstall() {
       skip "$f not installed"
     fi
   done
+  strip_line "$HOME/.zshrc" 'eval "$(starship init zsh)"'
+  ok "starship init line removed from ~/.zshrc"
 }
 
 dispatch "$@"
