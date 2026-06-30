@@ -93,14 +93,17 @@ is_enabled() {
   [[ "$default" == "on" ]]
 }
 
-# dispatch [MODE] — route a retrofitted step to its do_<mode> function.
+# dispatch [MODE] [ARG...] — route a retrofitted step to its do_<mode> function.
 # Steps define do_check / do_install / do_uninstall, then call: dispatch "$@"
+# Extra args after MODE are forwarded, letting a step scope work to named targets
+# (e.g. `uninstall starship` to drop one formula instead of the whole step).
 dispatch() {
   local mode="${1:-install}"
+  shift 2>/dev/null || true
   case "$mode" in
-    check)     do_check ;;
-    install)   do_install ;;
-    uninstall) do_uninstall ;;
+    check)     do_check "$@" ;;
+    install)   do_install "$@" ;;
+    uninstall) do_uninstall "$@" ;;
     *) err "unknown mode: $mode (use check|install|uninstall)"; exit 1 ;;
   esac
 }

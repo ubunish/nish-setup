@@ -38,9 +38,13 @@ do_install() {
   ok "starship init line in ~/.zshrc"
 }
 
+# do_uninstall [FORMULA...] — remove named formulae, or every MACOS_FORMULAE when
+# none given. The starship init line is only stripped when starship is a target.
 do_uninstall() {
+  local targets=("$@")
+  ((${#targets[@]})) || targets=("${MACOS_FORMULAE[@]}")
   local f
-  for f in "${MACOS_FORMULAE[@]}"; do
+  for f in "${targets[@]}"; do
     if brew list --formula "$f" >/dev/null 2>&1; then
       log "brew uninstall $f"
       brew uninstall "$f"
@@ -49,8 +53,10 @@ do_uninstall() {
       skip "$f not installed"
     fi
   done
-  strip_line "$HOME/.zshrc" 'eval "$(starship init zsh)"'
-  ok "starship init line removed from ~/.zshrc"
+  if _in_list starship "${targets[@]}"; then
+    strip_line "$HOME/.zshrc" 'eval "$(starship init zsh)"'
+    ok "starship init line removed from ~/.zshrc"
+  fi
 }
 
 dispatch "$@"

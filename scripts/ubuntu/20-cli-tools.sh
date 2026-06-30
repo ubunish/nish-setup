@@ -76,26 +76,31 @@ do_install() {
   ok "starship init line in ~/.bashrc"
 }
 
+# do_uninstall [TOOL...] — remove named tools (claude|uv|starship), or all when
+# none given. Each block runs only when its tool is targeted.
 do_uninstall() {
+  local targets=("$@")
+  # _wanted NAME — true when no targets given, or NAME is among them.
+  _wanted() { ((${#targets[@]})) || return 0; _in_list "$1" "${targets[@]}"; }
   # Claude Code + uv are installer-script tools; gh comes from an apt repo we leave behind.
-  if has_cmd claude; then
+  if _wanted claude && has_cmd claude; then
     log "Removing cloudflare plugin + Claude Code"
     claude plugin uninstall cloudflare@claude-plugins-official >/dev/null 2>&1 || true
     rm -rf "$HOME/.local/bin/claude" "$HOME/.claude" 2>/dev/null || true
     ok "Claude Code removed"
   fi
-  if has_cmd uv; then
+  if _wanted uv && has_cmd uv; then
     log "Removing uv"
     rm -rf "$HOME/.local/bin/uv" "$HOME/.local/bin/uvx" "$HOME/.cargo/bin/uv" "$HOME/.cargo/bin/uvx" 2>/dev/null || true
     ok "uv removed"
   fi
-  if has_cmd starship; then
+  if _wanted starship && has_cmd starship; then
     log "Removing starship"
     rm -f "$HOME/.local/bin/starship" 2>/dev/null || true
     strip_line "$HOME/.bashrc" 'eval "$(starship init bash)"'
     ok "starship removed"
   fi
-  warn "gh and its GitHub apt repo are left in place — remove manually if unwanted."
+  _wanted gh && warn "gh and its GitHub apt repo are left in place — remove manually if unwanted."
   return 0
 }
 
