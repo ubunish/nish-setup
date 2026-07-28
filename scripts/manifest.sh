@@ -55,6 +55,10 @@ MACOS_CASKS=(
   google-drive
   foxglove-studio
   orbstack
+  # 1Password 8. Its Safari extension ships inside the app — the standalone
+  # "1Password for Safari" is the version 7 companion and has no cask. Enabling
+  # the extension is a Safari setting; see docs/macos.md.
+  1password
 )
 
 # Foxglove Studio extensions built from source by 35-foxglove-extensions.sh.

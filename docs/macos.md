@@ -15,6 +15,21 @@
 - VS Code
 - Google Drive
 - Foxglove
+- 1Password
+
+## 1Password
+
+`brew install --cask 1password` installs version 8, which carries the Safari
+extension inside the app — there is no separate cask, and the standalone
+"1Password for Safari" is the version 7 companion. Two human steps remain:
+
+1. Sign in to the Ubundi account (the work vault; a personal account can sit
+   alongside it in the same app).
+2. Safari → Settings → Extensions → tick **1Password**. Nothing populates a
+   browser until this is on.
+
+Machines still running 1Password 7 get version 8 installed beside it — the cask
+does not migrate or remove the old app.
 
 ## Install
 
