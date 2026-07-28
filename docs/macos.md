@@ -31,6 +31,20 @@ extension inside the app — there is no separate cask, and the standalone
 Machines still running 1Password 7 get version 8 installed beside it — the cask
 does not migrate or remove the old app.
 
+### CLI
+
+`1password-cli` installs `op`, which reads a secret at run time so a token never
+lands in a dotfile:
+
+```bash
+op signin                        # once per session
+op run -- ./deploy.sh            # injects op:// refs from the environment
+op read "op://Ubundi/GitHub/token"
+```
+
+It authorises through the desktop app: 1Password → Settings → Developer → **Integrate
+with 1Password CLI**. Without that, `op` asks for the account password each call.
+
 ## Install
 
 - **Homebrew** — `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`

@@ -59,6 +59,10 @@ MACOS_CASKS=(
   # "1Password for Safari" is the version 7 companion and has no cask. Enabling
   # the extension is a Safari setting; see docs/macos.md.
   1password
+  # The `op` binary. Homebrew ships it as a cask, not a formula. Lets a script
+  # read a secret at run time (`op run -- ./deploy.sh`) instead of keeping a
+  # token in a dotfile.
+  1password-cli
 )
 
 # Foxglove Studio extensions built from source by 35-foxglove-extensions.sh.
