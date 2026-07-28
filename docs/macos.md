@@ -26,6 +26,34 @@
 - **Node** — `brew install node`
 - **Cloudflare Wrangler** — `brew install cloudflare-wrangler`
 - **OrbStack** — `brew install --cask orbstack`
+- **XcodeGen** — `brew install xcodegen`
+
+## Xcode
+
+Still a human step: Homebrew cannot install Xcode (App Store only), and the
+post-install wiring needs `sudo`. Only iOS work needs it — the macOS Swift repos
+build on the Command Line Tools alone.
+
+```bash
+# 1. Install Xcode from the App Store (~10 GB), or:
+brew install --cask xcodes    # a GUI for installing and switching Xcode versions
+
+# 2. Point the toolchain at it. Skip this and the machine stays on
+#    /Library/Developer/CommandLineTools, where every xcodebuild call fails.
+sudo xcode-select --switch /Applications/Xcode.app
+sudo xcodebuild -license accept
+
+# 3. Xcode 26 ships without the iOS platform — no simulator until it lands.
+xcodebuild -downloadPlatform iOS    # ~8 GB
+
+# Verify
+xcodebuild -version
+xcrun simctl list runtimes          # at least one iOS runtime
+```
+
+Consumer: the iOS capture companion in
+[`fm-desktop`](https://github.com/first-motive/fm-desktop) (`ios/`), whose Xcode
+project XcodeGen generates from a committed `project.yml`.
 
 ## Claude Code Plugins
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CLI tools via Homebrew: gh, uv, python, node, starship.
+# CLI tools via Homebrew — the formula list is MACOS_FORMULAE in the manifest.
 # starship also needs an init line in ~/.zshrc; the brew loop only drops the binary.
 set -euo pipefail
 source "$(dirname "$0")/../lib.sh"
