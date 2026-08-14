@@ -19,6 +19,7 @@ MACOS_STEPS=(
   "apps|30-apps.sh|on"
   "foxglove-extensions|35-foxglove-extensions.sh|on"
   "accounts|40-accounts.sh|on"
+  "tailscale|45-tailscale.sh|on"
   "signin|50-signin.sh|on"
   "ssh-key|60-ssh-key.sh|on"
   "python-envs|70-python-envs.sh|on"

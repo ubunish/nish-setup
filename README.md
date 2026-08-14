@@ -93,6 +93,7 @@ A few things can't be scripted and are flagged inline by the relevant step:
 
 - Create accounts: Google (`@ubundi.co.za`), Claude, Wise
 - `gh auth login`, `claude /login`, `huggingface-cli login`, `sudo tailscale up`
+  (Ubuntu) or signing in through the Tailscale app (macOS)
 - Isaac Sim download (NVIDIA account required)
 - Ubuntu installer choices, BIOS, install media
 

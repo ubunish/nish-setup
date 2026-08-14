@@ -95,6 +95,49 @@ Built from source and installed into the native app (`./setup.sh --only foxglove
 
 - **Joint State Publisher** — [`rogy-ken/foxglove-joint-state-publisher`](https://github.com/rogy-ken/foxglove-joint-state-publisher). Cloned to the build cache, then `npm install && npm run local-install` drops the unpacked extension into `~/.foxglove-studio/extensions/`. Restart Foxglove Studio to load it. Needs Node (`brew install node`).
 
+## Tailscale
+
+`./setup.sh --only tailscale` installs the app (`brew install --cask
+tailscale-app`, skipped when an App Store copy is already there) and links the
+CLI onto PATH.
+
+The one-time CLI shim is the part that catches people out. On Linux the
+installer drops `tailscale` in `/usr/bin`; on macOS the binary stays inside the
+app bundle, so a shell finds nothing.
+
+A symlink — the fix most guides reach for — does not work. The binary locates
+its own bundle from its executable path, and through a symlink that path lands
+outside the bundle, so every call dies with:
+
+```
+Tailscale/BundleIdentifiers.swift:47: Fatal error: The current bundleIdentifier is unknown to the registry
+```
+
+A shim that execs the real path keeps the bundle resolvable:
+
+```bash
+cat > "$(brew --prefix)/bin/tailscale" <<'EOF'
+#!/bin/sh
+exec "/Applications/Tailscale.app/Contents/MacOS/Tailscale" "$@"
+EOF
+chmod +x "$(brew --prefix)/bin/tailscale"
+```
+
+The Homebrew prefix is user-writable, so this needs no `sudo`. Then start the
+app, sign in, and confirm the tailnet:
+
+```bash
+tailscale status      # lists every machine and its 100.x address
+```
+
+SSH to a peer by its tailnet name once its SSH server is up (Ubuntu machines get
+one from the `ssh-server` step):
+
+```bash
+ssh-copy-id -i ~/.ssh/id_ed25519.pub <user>@<host>
+ssh <user>@<host>
+```
+
 ## Sign In
 
 - **GitHub** — `gh auth login`
