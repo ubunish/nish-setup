@@ -16,6 +16,7 @@
 - Google Drive
 - Foxglove
 - 1Password
+- Spotify
 
 ## 1Password
 
