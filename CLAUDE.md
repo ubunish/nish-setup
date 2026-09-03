@@ -24,11 +24,11 @@ C. Goal-Oriented Coding:
 1. Enter Planning Mode
 2. User Iterates Plan
 3. User Accepts Plan
-4. Claude Branch `main`
+4. Claude Works on `main` (Branch Only When Plan Asks)
 5. Claude Delegate Agents in Parallel → Complete Tasks
 6. Claude Commits Completed Tasks (Follow CONTRIBUTING.md > Coding Style)
-6. Claude + User Test Against Goal
-7. User Merges Branch and Pushes to `main`
+7. Claude Pushes (Branch: PR → CI Green → Merge)
+8. Claude + User Test Against Goal
 
 D. Documentation
 Follow CONTRIBUTING.md > Documentation
