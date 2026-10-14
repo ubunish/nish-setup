@@ -47,7 +47,7 @@ UBUNTU_STEPS=(
 # xcodegen generates the fm-desktop iOS companion's Xcode project from its
 # project.yml. Xcode itself is absent on purpose: Homebrew cannot install it
 # (App Store only), so it stays a manual step — see docs/macos.md.
-MACOS_FORMULAE=(gh uv python node cloudflare-wrangler jq mermaid-cli starship xcodegen)
+MACOS_FORMULAE=(gh uv python node cloudflare-wrangler jq mermaid-cli starship xcodegen rclone)
 
 MACOS_CASKS=(
   slack

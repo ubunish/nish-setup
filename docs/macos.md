@@ -57,6 +57,7 @@ with 1Password CLI**. Without that, `op` asks for the account password each call
 - **Cloudflare Wrangler** — `brew install cloudflare-wrangler`
 - **OrbStack** — `brew install --cask orbstack`
 - **XcodeGen** — `brew install xcodegen`
+- **rclone** (Backblaze B2 recordings bucket) — `brew install rclone`, then `rclone config` with the analysis key from the Ubundi Shared 1Password vault. Homebrew builds it without `rclone mount`.
 
 ## Xcode
 
