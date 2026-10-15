@@ -17,6 +17,7 @@
 - Foxglove
 - 1Password
 - Spotify
+- Vorssaint
 
 ## 1Password
 

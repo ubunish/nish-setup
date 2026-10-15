@@ -56,6 +56,7 @@ MACOS_CASKS=(
   google-drive
   foxglove-studio
   spotify
+  vorssaint
   orbstack
   # 1Password 8. Its Safari extension ships inside the app — the standalone
   # "1Password for Safari" is the version 7 companion and has no cask. Enabling
